@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard - Smart Attendance</title>
+    <style>
+        /* Modern, professional CSS for the Dashboard */
+        :root {
+            --header-bg: #34495e; /* Dark Slate Blue */
+            --sidebar-bg: #ecf0f1; /* Light Gray */
+            --primary-text: #2c3e50;
+            --accent-color: #3498db; /* Bright Blue */
+            --success-color: #2ecc71; /* Emerald Green */
+            --danger-color: #e74c3c; /* Alizarin Red for Absent */
+            --card-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            /* Best Background: Light, subtle texture/pattern */
+            background-color: #f7f7f7;
+            background-image: linear-gradient(90deg, transparent 50%, rgba(200, 200, 200, 0.05) 50%),
+                              linear-gradient(rgba(200, 200, 200, 0.05) 50%, transparent 50%);
+            background-size: 21px 21px;
+        }
+
+        .header { 
+            background-color: var(--header-bg); 
+            color: white; 
+            padding: 21px 41px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            box-shadow: 0 2px 11px rgba(0,0,0,0.3);
+        }
+        
+        .header h1 { margin: 0; font-size: 25px; }
+
+        .logout-btn { 
+            background-color: var(--danger-color); /* Updated to use var */
+            color: white; 
+            border: none; 
+            padding: 11px 19px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-weight: 590;
+            transition: background-color 0.4s;
+        }
+        .logout-btn:hover { background-color: #c0392b; }
+
+        .container { 
+            display: flex; 
+            max-width: 1312px; 
+            margin: 32px auto; 
+        }
+
+        .sidebar { 
+            width: 252px; 
+            padding: 21px; 
+            background-color: var(--sidebar-bg); 
+            border-radius: 8px; 
+            margin-right: 26px; 
+            box-shadow: var(--card-shadow);
+        }
+        .sidebar a {
+            display: block;
+            padding: 11px 0;
+            color: var(--primary-text);
+            text-decoration: none;
+            border-bottom: 1px solid #ddd;
+            transition: color 0.4s;
+        }
+        .sidebar a:hover { color: var(--accent-color); font-weight: 590; }
+
+        .main-content { 
+            flex-grow: 1; 
+            padding: 32px; 
+            background-color: white; 
+            border-radius: 9px; 
+            box-shadow: var(--card-shadow); 
+        }
+        
+        .class-card { 
+            background-color: #f9f9f9; 
+            border-left: 7px solid var(--accent-color); /* Highlight bar */
+            padding: 21px; 
+            margin-bottom: 21px; 
+            border-radius: 7px; 
+            cursor: pointer; 
+            transition: box-shadow 0.3s, transform 0.1s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+        }
+        .class-card:hover { 
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1); 
+            transform: translateY(-2px);
+        }
+        
+        .action-button {
+            padding: 11px 16px;
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 11px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+        .action-button:hover { background-color: #27ae60; }
+
+        /* --- New CSS for Attendance Report Table --- */
+        .attendance-report-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .attendance-report-table th,
+        .attendance-report-table td {
+            text-align: left;
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .attendance-report-table th {
+            background-color: var(--header-bg);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .attendance-report-table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .status-present {
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .status-absent {
+            color: var(--danger-color);
+            font-weight: bold;
+        }
+        /* ------------------------------------------- */
+
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Dashboard - Smart Attendance 📊</h1>
+        <div>
+            <span style="margin-right: 14px;">Welcome, Dr. Suraj Srivastav</span>
+            <button class="logout-btn" onclick="location.href='/logout'">Logout</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <h3>Quick Links</h3>
+            <a href="#dashboard">Dashboard Home ⏰</a>
+            <a href="#reports" id="report-link">📝 Attendance Reports</a>
+            <a href="/students">👥 Manage Students</a>
+            <a href="/profile">⚙️ My Profile</a>
+            <img src="" alt="">
+        </div>
+
+        <div class="main-content" id="dashboard-view">
+            <h2>Today's Schedule & Attendance 🕒</h2>
+
+            <div id="schedule-list">
+                <h3>Current Class:</h3>
+                <div class="class-card">
+                    <h4>CS 101 - Basic </h4>
+                    <p>📍 Room: B-205 | ⏰ Time: 10:00 AM - 11:00 AM</p>
+                    <p style="color: var(--success-color); font-weight: bold;">Status: Taking Attendance</p>
+                    <button class="action-button" onclick="location.href='/take-attendance/CS101'">Take Attendance </button>
+                </div>
+
+                <h3>Upcoming Classes:</h3>
+                <div class="class-card" style="border-left-color: #f39c12;"> <h4>MATH 205 - Calculus II</h4>
+                    <p>📍 Room: A-101 | ⏰ Time: 1:00 PM - 2:00 PM</p>
+                </div>
+                <div class="class-card" style="border-left-color: #f39c12;"> <h4>Electrical 120 - </h4>
+                    <p>📍 Room: A-101 | ⏰ Time: 2:00 PM - 3:00 PM</p>
+                </div>
+            </div>
+
+            <hr style="margin-top: 40px; border-color: #eee;">
+            
+            <h3>Administrative Actions</h3>
+            <button class="action-button" style="background-color: #3498db; margin-right: 15px;" id="report" onclick="alert('Weekly report downloaded successfully')">Download Weekly Report</button>
+            <button class="action-button" style="background-color: #9b59b6;">Mark Late Students</button>
+        </div>
+
+        <div class="main-content" id="reports-view" style="display: none;">
+            <h2>Attendance Report for CS 101 (14 Oct 2025) 📝</h2>
+            <p><strong>Class:</strong> CS 101 - Basic Programming | <strong>Total Students:</strong> 25 | <strong>Present:</strong> 22 | <strong>Absent:</strong> 3</p>
+
+            <table class="attendance-report-table">
+                <thead>
+                    <tr>
+                        <th>Roll No.</th>
+                        <th>Student Name</th>
+                        <th>Branch</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CSB001</td>
+                        <td>Aanya Sharma</td>
+                        <td>Computer Science</td>
+                        <td class="status-present">Present</td>
+                    </tr>
+                    <tr>
+                        <td>CSB002</td>
+                        <td>Rohan Kapoor</td>
+                        <td>Computer Science</td>
+                        <td class="status-present">Present</td>
+                    </tr>
+                    <tr>
+                        <td>CSB003</td>
+                        <td>Priya Verma</td>
+                        <td>Computer Science</td>
+                        <td class="status-absent">Absent</td>
+                    </tr>
+                    <tr>
+                        <td>CSB004</td>
+                        <td>Sameer Khan</td>
+                        <td>Computer Science</td>
+                        <td class="status-present">Present</td>
+                    </tr>
+                    <tr>
+                        <td>CSB005</td>
+                        <td>Neha Jain</td>
+                        <td>Computer Science</td>
+                        <td class="status-absent">Absent</td>
+                    </tr>
+                    <tr>
+                        <td>CSB006</td>
+                        <td>Vivek Singh</td>
+                        <td>Computer Science</td>
+                        <td class="status-present">Present</td>
+                    </tr>
+                    <tr>
+                        <td>CSB007</td>
+                        <td>Anjali Patel</td>
+                        <td>Computer Science</td>
+                        <td class="status-present">Present</td>
+                    </tr>
+                     <tr>
+                        <td>CSB008</td>
+                        <td>Karan Mehta</td>
+                        <td>Computer Science</td>
+                        <td class="status-absent">Absent</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+
+<script>
+    // Simple JavaScript to switch between the two views on link click
+    document.getElementById('report-link').addEventListener('click', function(e) {
+        e.preventDefault(); // Prevent default link behavior (page reload)
+        document.getElementById('dashboard-view').style.display = 'none';
+        document.getElementById('reports-view').style.display = 'block';
+    });
+
+    document.querySelector('.sidebar a[href="#dashboard"]').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('reports-view').style.display = 'none';
+        document.getElementById('dashboard-view').style.display = 'block';
+    });
+</script>
+
+</body>
+</html>

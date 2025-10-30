@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    </head>
+<body>
+ 
+        
+       
+            
+    </div>
+
+</body>
+</html>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Login - Smart Attendance System</title>
+    <style>
+        /* Modern, professional CSS for the Login Page */
+        :root {
+            --primary-color: #007bff; /* Blue */
+            --secondary-color: #28aa24; /* Dark Green */
+            --light-bg: #f4f7f6;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            /* Best Background: A smooth, calming gradient */
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .login-container {
+            background-color: var(--white);
+            padding: 45px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            width: 350px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .login-container h2 {
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 17px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.1s;
+            letter-spacing: 0.5px;
+            margin-top: 10px;
+        }
+
+        .login-button:hover {
+            background-color: #1e7d23; /* Slightly darker green */
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h1>KANPUR INSTIITUTE OF TECHNOLOGY</h1>
+        <h2>Smart Attendance Login 🔑</h2>
+        
+        <form id="teacherLoginForm" action="/login" method="POST">
+            
+            <div class="form-group">
+                <label for="username">👤 Teacher ID / Username</label>
+                <input type="text" id="username" name="username" required placeholder="Enter your ID">
+            </div>
+
+            <div class="form-group">
+                <label for="password">🔒 Password</label>
+                <input type="password" id="password" name="password" required placeholder="••••••••">
+            </div>
+            
+            <button type="submit" class="login-button">LOG IN</button>
+
+            <p style="margin-top: 20px; font-size: 14px;"><a href="#" style="color: var(--primary-color); text-decoration: none;">Forgot Password?</a></p>
+        </form>
+    </div>
+
+</body>
+</html>
+
+
+
+
